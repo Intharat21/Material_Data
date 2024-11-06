@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดวัสดุ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        {% if employee %}
+            <h2>รายละเอียดวัสดุ</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ลำดับ</th>
+                    <td>{{ employee['Unnamed: 1'] }}</td>
+                </tr>
+                <tr>
+                    <th>รายการ</th>
+                    <td>{{ employee['Unnamed: 2'] }}</td>
+                </tr>
+                <tr>
+                    <th>หน่วย</th>
+                    <td>{{ employee['Unnamed: 3'] }}</td>
+                </tr>
+                <tr>
+                    <th>จำนวนคงเหลือในสต็อก</th>
+                    <td>{{ employee['Unnamed: 4'] }}</td>
+                </tr>
+                <tr>
+                    <th>จำนวนที่ต้องการสั่ง</th>
+                    <td>{{ employee['Unnamed: 15'] }}</td>
+                </tr>
+                <tr>
+                    <th>หมวดหมู่</th>
+                    <td>{{ employee['Unnamed: 13'] }}</td>
+                </tr>
+            </table>
+            <a href="{{ url_for('edit_row', row_index=employee['index']) }}" class="btn btn-secondary">แก้ไข</a>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">กลับหน้าหลัก</a>
+        {% else %}
+            <!-- Modal to indicate no results were found -->
+            <div class="modal fade" id="notFoundModal" tabindex="-1" role="dialog" aria-labelledby="notFoundModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="notFoundModalLabel">ไม่พบวัสดุ</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ไม่พบวัสดุที่มี ลำดับ ที่ระบุ
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ url_for('index') }}" class="btn btn-secondary">กลับหน้าหลัก</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $('#notFoundModal').modal('show');
+                });
+            </script>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

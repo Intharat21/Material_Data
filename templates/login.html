@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <div class="nav-con">
+            <div class="logo">
+                <a href="{{ url_for('main') }}">
+                    <img src="{{ url_for('static', filename='image/images.png') }}" alt="" style="width: 100px; margin: 0 1rem;">
+                </a>
+            </div>
+            <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <div class="signup">
+                <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="login">
+    <h1>Login</h1>
+    <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
+    </form>
+    <div class="error-message" id="error-message" style="color: red; display: none;">
+        ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+    </div>
+</section>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // การตรวจสอบพื้นฐาน
+    if (username === "" || password === "") {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        event.preventDefault(); // ยกเลิกการส่งฟอร์ม
+    }
+});
+</script>
+
+</body>
+</html>

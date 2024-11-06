@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพิ่มรายการ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>เพิ่มรายการ</h2>
+        {% if message %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+        {% endif %}
+        <form action="{{ url_for('add_entry') }}" method="POST">
+            <div class="form-group">
+                <label for="emp_id">ลำดับ:</label>
+                <input type="text" name="emp_id" id="emp_id" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="name">รายการ:</label>
+                <input type="text" name="name" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="position">หน่วย:</label>
+                <input type="text" name="position" id="position" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="hire_date">จำนวนคงเหลือในสต็อก:</label>
+                <input type="text" name="hire_date" id="hire_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="no">จำนวนที่ต้องการสั่ง:</label>
+                <input type="text" name="no" id="no" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="no">หมวดหมู๋:</label>
+                <input type="text" name="category" id="category" class="form-control mt-2">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-2">เพิ่ม</button>
+            <button type="reset" class="btn btn-secondary btn-block mt-2">รีเซต</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-block mt-2">กลับหน้าหลัก</a>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

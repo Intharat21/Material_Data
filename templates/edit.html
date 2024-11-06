@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Material Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Edit Material Data</a>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Material Data</h1>
+        <form method="POST" action="{{ url_for('edit_row') }}">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Order</th>
+                        <th>Item Description</th>
+                        <th>Unit</th>
+                        <th>Stock Quantity</th>
+                        <th>Quantity to Order</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in Data %}
+                    <tr>
+                        <td><input type="text" name="order" value="{{ material['Unnamed: 1'] }}" /></td>
+                        <td><input type="text" name="item" value="{{ material['Unnamed: 2'] }}" class="text-start" /></td>
+                        <td><input type="text" name="unit" value="{{ material['Unnamed: 3'] }}" /></td>
+                        <td><input type="text" name="stock" value="{{ material['Unnamed: 4'] }}" /></td>
+                        <td><input type="text" name="quantity" value="{{ material['Unnamed: 15'] }}" /></td>
+                        <td><input type="text" name="category" value="{{ material['Unnamed: 13'] }}" /></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

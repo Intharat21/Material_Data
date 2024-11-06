@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ca28e7, #ed04bb);
+        }
+        .profile-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+        .profile-card h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        .profile-card p {
+            font-size: 18px;
+            color: #666;
+        }
+        .profile-card .user-info {
+            font-size: 16px;
+            color: #888;
+        }
+        .profile-card a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff8a00;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .profile-card a:hover {
+            background: #da1b60;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <i class="fa fa-address-card" aria-hidden="true"><h1>Welcome, {{ user.username }}!</h1>
+            <p class="user-info">Username: {{ user.username }}</p>
+            <p class="user-info">Password: ********</p> <!-- แทนที่รหัสผ่านด้วยเครื่องหมาย * -->
+            <p class="user-info">User ID: {{ user.id }}</p>
+            <a href="{{ url_for('logout') }}">Logout</a></i>
+            <a href="{{ url_for('main') }}"> Go Back</a></i>
+        
+    </div>
+</body>
+</html>
