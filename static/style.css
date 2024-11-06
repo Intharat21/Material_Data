@@ -1,0 +1,357 @@
+* {
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container {
+    max-width:  1280px;
+    
+}
+
+nav {
+    padding: 1rem;
+    background-color: #8a16f0;
+    
+}
+.nav-con {
+    display: flex;
+    justify-content:  space-between;
+}
+
+.logo img{
+    width: 120px;
+    margin: 0 1rem;
+}
+
+.menu{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    
+    
+}
+
+.menu li {
+    margin: 0 6.5rem;
+}
+
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu li a:hover {
+
+    box-shadow:  0 0 10px rgba(0,0,0,0.3);
+    transition:  0.3s;
+    color: black;
+}
+
+.signup {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin-right: -10rem;
+}
+
+.signup li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.signup li a:hover{
+    box-shadow:  0 0 10px rgba(14, 14, 14, 0.3);
+    transition:  0.3s;
+    color: black;
+
+}
+
+.login {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin-right: 4rem;
+}
+
+.login li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.login li a:hover{
+    box-shadow:  0 0 10px rgba(14, 14, 14, 0.3);
+    transition:  0.3s;
+    color: black;
+
+}
+
+main {
+    position: relative; /* Ensures child elements like the button can be positioned over the image */
+}
+
+.main img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.btn {
+    text-decoration: none;
+    position: absolute;
+    transform: translate(-50%, -50%); /* Adjusts position from center */
+    top: 50%; /* Centers vertically */
+    left: 50%; /* Centers horizontally */
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    background-color: rgb(14, 14, 26);
+    color: rgb(234, 234, 234);
+    font-weight: 700;
+    transition: 0.6s;
+    box-shadow: 0px 0px 60px #1f4c65;
+    -webkit-box-reflect: below 10px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4));
+  }
+  
+  .btn:active {
+    scale: 0.92;
+  }
+  
+  .btn:hover {
+    background: rgb(2,29,78);
+    background: linear-gradient(270deg, rgba(2, 29, 78, 0.681) 0%, rgba(31, 215, 232, 0.873) 60%);
+    color: rgb(4, 4, 38);
+  }
+
+  section.card {
+    text-decoration: none;
+    position: absolute;
+    transform: translate(-50%, -50%); /* Centers card */
+    font-size: 1.2rem;
+    top: 75%; /* Centers vertically */
+    left: 50%; /* Centers horizontally */
+    width: 250px;
+    height: 250px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 1000px;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card svg {
+    fill: #000;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 3px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px #000000;
+    background-color: #f2f2f2;
+    color: #ffffff;
+}
+
+.card__content {
+    color: #000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    transform: rotateX(-90deg); /* Initial rotation */
+    transform-origin: center; /* Rotate in place */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .card__content {
+    transform: rotateX(0deg); /* Rotate to show content */
+}
+
+.card__title {
+    margin: 0;
+    padding-left: 5px;
+    font-size: 24px;
+    color: #000000;
+    font-weight: 700;
+}
+
+.card:hover svg {
+    transform: scale(0); /* Hide icon by scaling */
+}
+
+.card__description {
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: #000000;
+    line-height: 1.4;
+}
+
+.signup a {
+    color: white;
+    background-color: #007bff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.signup a:hover {
+    background-color: #0056b3;
+}
+
+
+.login a {
+    color: white;
+    background-color: #01060c;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+}
+
+.login a:hover {
+    background-color: #a6b61c;
+}
+/* Login Section */
+section.login {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+section.login h1 {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+
+form label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Error Message */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .nav-con {
+        flex-direction: column;
+        align-items: center;
+    }
+    .signup a {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+  
+/* Container for the profile dropdown */
+.profile {
+    position: relative;
+    display: inline-block;
+    margin-left: 0; /* Align it to the right if flex is enabled on parent */
+    
+}
+/* Hide the dropdown content by default */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0;
+    border-radius: 4px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content li {
+    list-style: none;
+}
+
+.dropdown-content li a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content li a:hover {
+    background-color: #ddd;
+}
+
+/* Show dropdown on toggle */
+.profile .dropdown-content.show {
+    display: block;
+}
+
+.list-item, .dropdown-content, li, .profile {
+    list-style-type: none; /* Remove any bullet points */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
