@@ -44,7 +44,7 @@ table {
 }
 
 th {
-    background-color: #007bff; /* สีพื้นหลังของหัวตาราง */
+    background-color:#8a16f0; /* สีพื้นหลังของหัวตาราง */
     color: white; /* สีข้อความในหัวตาราง */
 }
 
@@ -80,7 +80,7 @@ td {
 }
 
 .modal-header {
-    background-color: #007bff; /* สีพื้นหลังของ header modal */
+    background-color: #8a16f0; /* สีพื้นหลังของ header modal */
     color: white; /* สีข้อความใน header modal */
 }
 
@@ -185,7 +185,7 @@ td {
   line-height: 1.3;
   padding: .875rem 1.125rem;
   position: relative;
-  text-align: left;
+  text-align: center;
   text-decoration: none;
   transform: translateZ(0) scale(1);
   transition: transform .2s;
@@ -226,4 +226,82 @@ td {
 
 .button-80:not(:disabled):active {
   transform: translateY(.125rem);
+}
+/* ปรับขนาดและลักษณะของ input */
+#search_term {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* เปลี่ยนสีขอบเมื่อโฟกัส */
+#search_term:focus {
+  border-color: #c131e1;
+  box-shadow: 0 0 10px rgba(92, 107, 192, 0.2);
+  outline: none;
+}
+
+/* เพิ่มปุ่มค้นหาที่ดูดี */
+.button-80 {
+  background-color: #2d44c8;
+  color: white;
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 25px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* เปลี่ยนสีเมื่อ hover */
+.button-80:hover {
+  background-color: #3f4fa0;
+}
+
+/* ปรับ styling ของฟอร์ม */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.button-25 {
+  background: #e942ff;
+  border: 1px solid #7e42ff;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  vertical-align: middle;
+}
+
+.button-25:hover,
+
+.button-25:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #0a0101;
+}
+
+.button-25:active {
+  opacity: .5;
 }
