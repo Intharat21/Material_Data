@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for,flash,session
+from flask_sqlalchemy import SQLAlchemy
+import hashlib
 import pandas as pd
 
 app = Flask(__name__)
+excel_file = 'instance/Prosth-รายการวัสดุนอกเวลาที่ต้องการสั่งซื้อ.xlsx'
 
 @app.route('/')
 def main():
@@ -37,7 +40,7 @@ def update_data():
 
     # Get form data and update 
     for i, row in df.iterrows():
-        df.at[i, 'Unnamed: 1'] = request.form.get(f'order_{i+1}')
+        df.at[i, 'Unnamed: 1' ] = request.form.get(f'order_{i+1}')
         df.at[i, 'Unnamed: 2'] = request.form.get(f'item_{i+1}')
         df.at[i, 'Unnamed: 3'] = request.form.get(f'unit_{i+1}')
         df.at[i, 'Unnamed: 4'] = request.form.get(f'stock_{i+1}')
@@ -84,30 +87,64 @@ def add_entry():
 
     return render_template('add.html', message=message)
 
-
 @app.route('/edit/<int:row_index>', methods=['GET', 'POST'])
 def edit_row(row_index):
-    # Read Excel file
-    excel_file = 'instance/Prosth-รายการวัสดุนอกเวลาที่ต้องการสั่งซื้อ.xlsx'
+    # Load the Excel file into a DataFrame
     df = pd.read_excel(excel_file)
     df = df.fillna('')
 
     if request.method == 'POST':
-        # Update the specific row 
-        df.at[row_index, 'Unnamed: 1'] = request.form['order']
-        df.at[row_index, 'Unnamed: 2'] = request.form['item']
-        df.at[row_index, 'Unnamed: 3'] = request.form['unit']
-        df.at[row_index, 'Unnamed: 4'] = request.form['stock']
-        df.at[row_index, 'Unnamed: 15'] = request.form['quantity']
-        df.at[row_index, 'Unnamed: 13'] = request.form['category']  # Update the category field
+        # Get the updated form data
+        order = request.form['order']
+        item = request.form['item']
+        unit = request.form['unit']
+        stock = request.form['stock']
+        quantity = request.form['quantity']
+        category = request.form['category']
 
-        # Save the updated data back to Excel
+        # Adjust row_index to be zero-based for DataFrame
+        row_index_zero_based = row_index-1
+
+        # Ensure that you are updating the correct row in the DataFrame
+        df.at[row_index_zero_based, 'Unnamed: 1'] = order
+        df.at[row_index_zero_based, 'Unnamed: 2'] = item
+        df.at[row_index_zero_based, 'Unnamed: 3'] = unit
+        df.at[row_index_zero_based, 'Unnamed: 4'] = stock
+        df.at[row_index_zero_based, 'Unnamed: 15'] = quantity
+        df.at[row_index_zero_based, 'Unnamed: 13'] = category
+
+        # Save the updated DataFrame back to the Excel file
         df.to_excel(excel_file, index=False)
+        
+
+        # Redirect to the index page to see the updated data
         return redirect(url_for('index'))
 
-    # Pass the specific row data to the template
-    row_data = df.iloc[row_index].to_dict()
+    # If GET request, show the form with the data from the specific row
+    row_index_zero_based = row_index  # Adjust to zero-based index
+    row_data = df.iloc[row_index_zero_based]  # Get data for the row being edited
     return render_template('edit_row.html', row_data=row_data, row_index=row_index)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_edit():
+    # Load the Excel file
+    excel_file = 'instance/Prosth-รายการวัสดุนอกเวลาที่ต้องการสั่งซื้อ.xlsx'
+    df = pd.read_excel(excel_file)
+    df = df.fillna('')
+
+    search_results = pd.DataFrame()  # Initialize as an empty DataFrame
+
+    if request.method == 'POST':
+        if 'search_term' not in request.form:
+            # Handle the missing search term
+            return "Search term is required", 400
+
+        search_term = request.form['search_term'].lower()  # Get the search term
+
+        # Search for rows that match the search term
+        search_results = df[df.apply(lambda row: row.astype(str).str.contains(search_term).any(), axis=1)]
+
+    return render_template('search_edit.html', search_results=search_results)
 
 @app.route('/delete/<int:row_index>', methods=['POST'])
 def delete_row(row_index):
@@ -123,27 +160,6 @@ def delete_row(row_index):
 
     return redirect(url_for('index'))
 
-@app.route('/search', methods=['GET', 'POST'])
-def search_entry():
-    if request.method == 'POST':
-        emp_id = request.form['emp_id']
-        excel_file = 'instance/Prosth-รายการวัสดุนอกเวลาที่ต้องการสั่งซื้อ.xlsx'
-        df = pd.read_excel(excel_file).fillna('')
-
-        # Add an index column to keep track of the original row index
-        df = df.reset_index()
-
-        # Filter the DataFrame for the first match and get it as a dictionary
-        filtered_df = df[df['Unnamed: 1'].astype(str) == emp_id]
-        employee = filtered_df.iloc[0].to_dict() if not filtered_df.empty else None
-
-        return render_template('search_result.html', employee=employee)
-
-    return redirect(url_for('index'))
-
-from flask_sqlalchemy import SQLAlchemy
-import hashlib
-
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # เปลี่ยนชื่อฐานข้อมูลเป็น users.db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -157,14 +173,18 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
-# Route for registration
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        confirm_password = request.form['confirm_password']
 
+        if password != confirm_password:
+            flash('Passwords do not match. Please try again.', 'danger')
+            return redirect(url_for('register'))
+
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
@@ -173,11 +193,15 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
-
 # Route for login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error_message = None
     if request.method == 'POST':
+        if 'agree' not in request.form:
+            flash('Please confirm you are not a robot.', 'danger')
+            return redirect(url_for('login'))
+
         username = request.form['username']
         password = request.form['password']
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
@@ -189,10 +213,9 @@ def login():
             flash('Login successful!', 'success')
             return redirect(url_for('main'))
         else:
-            flash('Invalid username or password.', 'danger')
+            error_message = 'Invalid username or password.'
 
-    return render_template('login.html')
-
+    return render_template('login.html', error_message=error_message)
 # Route for displaying the profile
 @app.route('/profile')
 def profile():
@@ -202,7 +225,6 @@ def profile():
 
     user = User.query.get(session['user_id'])
     return render_template('profile.html', user=user)
-
 # Logout route
 @app.route('/logout')
 def logout():
