@@ -12,70 +12,69 @@
         <a href="{{ url_for('main') }}">
             <img src="{{ url_for('static', filename='image/images.png') }}" alt=""  style="width: 100px; margin: 0 1rem;">
         </a>
-        <div class="mb-4 text-center" style="margin: 0 1rem; ">
-            <a href="/add" class="button-80 mt-2" ;">เพิ่มรายการ</a>
-            <a href="#" class="button-80" data-bs-toggle="modal" data-bs-target="#searchModal" >ค้นหารายการ</a>
+        <div class="mb-4 text-center" style="margin: 0 1rem;">
+            <a href="/add" class="button-80 mt-2">เพิ่มรายการ</a>
+            <a href="#" class="button-80" data-bs-toggle="modal" data-bs-target="#searchModal" style="margin-top: 1rem;">ค้นหารายการ</a>
         </div>
     </nav>
-    
-    <div class="main">
-    <div class="container mt-5">
-        <h1 class="mb-4">Material Data</h1>
-        <!-- Search Modal -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="searchModalLabel">ค้นหารายการ</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url_for('search_entry') }}" method="POST">
-                            <div class="mb-3">
-                                <label for="emp_id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="emp_id" name="emp_id" placeholder="กรอก ID ของรายการที่ต้องการค้นหา">
-                            </div>
-                            <button type="submit" class="btn btn-primary">ค้นหา</button>
-                        </form>
+    <div class="main" style=" background-color: #f0f0f0;">
+        <div class="container" style="margin-top: -0.001%;">
+            
+            <h1 class="mb-4">ข้อมูลวัสดุ </h1>
+            
+            <!-- Search Modal -->
+            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchModalLabel">ค้นหารายการ</h5>
+                            <button  type="button " class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('search_edit') }}" method="POST">
+                                <label for="search_term" style="display: flex;">รายการที่ต้องการค้นหา:</label>
+                                <input type="text" id="search_term" name="search_term" >
+                                
+                                <button type="submit " style="display: flex; background-color: #8a16f0; " class="button-80 mt-2">ค้นหา</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="color: black;">ID</th>
-                    <th style="color: black;">Material Name</th>
-                    <th style="color: black;">Unit</th>
-                    <th style="color: black;">Stock</th>
-                    <th style="color: black;">Quantity</th>
-                    <th style="color: black;">Category</th> <!-- New Category Column -->
-                    <th style="color: black;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in Data %}
-                <tr>
-                    <td>{{ entry['Unnamed: 1'] }}</td>
-                    <td class="text-start">{{ entry['Unnamed: 2'] }}</td>
-                    <td>{{ entry['Unnamed: 3'] }}</td>
-                    <td>{{ entry['Unnamed: 4'] }}</td>
-                    <td>{{ entry['Unnamed: 15'] }}</td>
-                    <td>{{ entry['Unnamed: 13'] }}</td> <!-- Display Category -->
-                    <td>
-                        <!-- Add an Edit button -->
-                        <a href="{{ url_for('edit_row', row_index=loop.index0) }}" class="button-32  mt-2">Edit</a>
-                        <form action="{{ url_for('delete_row', row_index=loop.index0) }}" method="POST" style="display: inline;">
-                            <button type="submit" class="button-24  mt-3 " onclick="return confirm('แน่ใจหรือไม่ว่าจะลบ?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="color: black;">ลำดับ</th>
+                        <th style="color: black; text-align: center;">รายการ</th>
+                        <th style="color: black;">หน่วย</th>
+                        <th style="color: black;">จำนวนที่ คงเหลือในสต็อก</th>
+                        <th style="color: black;">จำนวนที่ ต้องการสั่ง</th>
+                        <th style="color: black;">หมวดหมู่</th>
+                        <th style="color: black;">ตั้งค่า</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in Data %}
+                    <tr>
+                        <td>{{ entry['Unnamed: 1'] }}</td>    <!-- Use loop.index to show the order number starting from 1 -->
+                        <td class="text-start">{{ entry['Unnamed: 2'] }}</td>
+                        <td>{{ entry['Unnamed: 3'] }}</td>
+                        <td>{{ entry['Unnamed: 4'] }}</td>
+                        <td>{{ entry['Unnamed: 15'] }}</td>
+                        <td>{{ entry['Unnamed: 13'] }}</td> <!-- Display Category -->
+                        <td style="padding: 1 rem; display: flex;">
+                            <a href="{{ url_for('edit_row', row_index=loop.index0) }}" class="button-32 ">แก้ไข</i></a>
+                            <form action="{{ url_for('delete_row', row_index=loop.index0) }}" method="POST">
+                                <button style="margin-left: 1rem;" type="submit" class="button-24 " onclick="return confirm('แน่ใจหรือไม่ว่าจะลบ?')"> ลบ</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
     <!-- Bootstrap JS for modal functionality -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

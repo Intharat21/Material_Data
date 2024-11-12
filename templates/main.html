@@ -16,22 +16,20 @@
                         <img src="{{ url_for('static', filename='image/images.png') }}" alt="" style="width: 100px; margin: 0 1rem;">
                     </a>
                 </div>
-                <ul class="menu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
+                
     
                 <!-- Profile dropdown menu -->
                 {% if user %}
-                    <div class="profile">
-                        <i class="fa fa-user-circle " aria-hidden="true" style="margin-top: 1.5rem; margin-left: 7.5rem;font-size: 40px;"></i>
-                        <li class="user" style=" margin-left: 7rem; margin-top: -1.5rem;" >
+                    <div class="profile" style="margin-left: 64rem;">
+                        <i class="fa fa-user-circle " aria-hidden="true" style="margin-top: 1.5rem; margin-left: 7.5rem;font-size: 50px;"></i>
+                        <li class="user" style=" margin-left: 7rem; margin-top: -2.5rem;" >
                             <a href="javascript:void(0)" onclick="toggleDropdown()" style="text-decoration: none;
-                            color:white; font-size: 1.2rem; margin:  0 5rem;">{{ user.username }}</a>
+                            color:white; font-size: 1.5rem; margin:  0 5rem;">{{ user.username }}</a>
                             <ul id="profileDropdown" class="dropdown-content">
                                 <li><a href="{{ url_for('profile') }}"><i class="fa fa-user-o" aria-hidden="true"> Profile</i></a></li>
+                                <li><a href="#"><i class="fa fa-folder" aria-hidden="true"> About Us</i></a></li>
+                                <li><a href="#"><i class="fa fa-life-ring" aria-hidden="true"> Services</i></a></li>
+                                <li><a href="#"><i class="fa fa-tags" aria-hidden="true"> Contact Us</i></a></li>
                                 <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"> Logout</i></a></li>
                             </ul>
                         </li>
@@ -51,11 +49,11 @@
                         </a>
                     </section>
                 {% else %}
-                    <div class="login">
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <div class="login" style="margin-left: 68rem;">
+                        <li><a href="{{ url_for('login') }}"> Login</a></li>
                     </div>
                     <div class="signup">
-                        <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+                        <li><a href="{{ url_for('register') }}"> Sign Up</a></li>
                     </div>
                 {% endif %}
             </div>

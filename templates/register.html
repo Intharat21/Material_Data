@@ -5,56 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        nav {
+        padding: 1rem;
+        background-color: #8a16f0;
+    
+        }
+        .container {
+             max-width:  1280px;
+    
+            }
+        .nav-con {
+            display: flex;
+            justify-content:  space-between;
+        }
+
+        .logo img{
+            width: 120px;
+            margin: 0 2rem;
+        }
+
+        .menu{
+            display: flex;
+            list-style: none;
+            align-items: center;
+            
+            
+        }
+
+        .menu li {
+            margin: 0 8rem;
+        }
+
+        .menu li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .menu li a:hover {
+
+            box-shadow:  0 0 10px rgba(0,0,0,0.3);
+            transition:  0.3s;
+            color: black;
+        }
+        .register {
+            position: relative;
+            max-width: 400px;
+            text-decoration: none;
+            position: absolute;
+            transform: translate(-50%, -50%); /* Adjusts position from center */
+            top: 60%; /* Centers vertically */
+            left: 50%; /* Centers horizontally */
+            padding: 2rem;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: left;
+            transform: translateY(-50px); /* Moves the form above the image */
+            text-decoration: none;
+            transform: translate(-50%, -50%); /* Adjusts position from center */
+            
+        }
+        .register h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .register label, .register input, .register button {
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            box-sizing: border-box;
+        }
+        .register input {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .register button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 0.8rem;
+        }
+        .register button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-    <div class="container">
-        <div class="nav-con">
-            <div class="logo">
-                <a href="{{ url_for('main') }}">
-                    <img src="{{ url_for('static', filename='image/images.png') }}" alt="" style="width: 100px; margin: 0 1rem;">
-                </a>
-            </div>
-            <ul class="menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-            <div class="login">
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-con">
+                <div class="logo">
+                    <a href="{{ url_for('main') }}">
+                        <img src="{{ url_for('static', filename='image/images.png') }}" alt="" style="width: 100px; margin: 0 1rem;">
+                    </a>
+                </div>
+                
+                <div class="login" style="margin-left: 68rem;">
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<section class="register">
-    <h1 style="padding: 0 1rem;">Register</h1>
-    <form id="registerForm" method="POST" action="{{ url_for('register') }}">
-        <label for="username" style="padding: 0 1rem;">Username:</label>
-        <input type="text" id="username" name="username" required>
+    <img src="{{ url_for('static', filename='image/02.jpg') }}" alt="" style="width: 100%; background-repeat: repeat-x;">
+
+    <section class="register">
+        <h1>Register</h1>
+        <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            
+            <button type="submit">Sign Up</button>
+        </form>
         
-        <label for="password" style="padding: 0 1rem;">Password:</label>
-        <input type="password" id="password" name="password" required>
         
-        <button type="submit" >Sign Up</button>
-    </form>
-</section>
+    </section>
 
-<script>
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
 
-    // คุณสามารถเพิ่มการตรวจสอบข้อมูลได้ที่นี่
-    if (username === "" || password === "") {
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-        event.preventDefault(); // ยกเลิกการส่งฟอร์ม
-    }
-});
-
-</script>
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                event.preventDefault(); // Prevent form submission if passwords don't match
+            }
+        });
+    </script>
 
 </body>
 </html>

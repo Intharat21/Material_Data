@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search and Edit</title>
+    <!-- Add Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style=" background-color: #f0f0f0;">
+    <nav class="navbar">
+        <a href="{{ url_for('main') }}">
+            <img src="{{ url_for('static', filename='image/images.png') }}" alt=""  style="width: 100px; margin: 0 1rem;">
+        </a>
+        <!-- Search Form -->
+        <form action="/search" method="POST" class="mb-4" style="margin: 0 6.5rem;">
+            <div class="input-group" style="display: flex; ">
+                <input type="text" name="search_term" class="form-control" placeholder="รายการที่ต้องการค้นหา" required style="width: 200px; margin: 0 0rem;" >
+                <button type="submit" class="button-25" >ค้นหา</button>
+            </div>
+        </form>
+    </nav>
+    
+    <div class="main" >
+        <div class="container " style="margin-top: -0.001%;">
+            <!-- Search Results -->
+            {% if search_results.empty %}
+                <div class="alert alert-warning" role="alert">
+                    No results found.
+                </div>
+            {% else %}
+                <h2 class="mb-4">รายการที่ค้นหา:</h2>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="color: black;">ลำดับ</th>
+                            <th style="color: black;">รายการ</th>
+                            <th style="color: black;">หน่วย</th>
+                            <th style="color: black;">จำนวนคงเหลือในสต็อก</th>
+                            <th style="color: black;">จำนวนที่ต้องการสั่ง</th>
+                            <th style="color: black;">หมวดหมู่</th>
+                            <th style="color: black;">ตั้งค่า</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for index, row in search_results.iterrows() %}
+                        <tr>
+                            <td>{{ row['Unnamed: 1'] }}</td>
+                            <td>{{ row['Unnamed: 2'] }}</td>
+                            <td>{{ row['Unnamed: 3'] }}</td>
+                            <td>{{ row['Unnamed: 4'] }}</td>
+                            <td>{{ row['Unnamed: 15'] }}</td>
+                            <td>{{ row['Unnamed: 13'] }}</td>
+                            <td style="padding: 1 rem; display: flex;">
+                                <a href="{{ url_for('edit_row', row_index=index) }}" class="button-32 ">แก้ไข</a>
+                                <form action="{{ url_for('delete_row', row_index=index) }}" method="POST">
+                                    <button style="margin-left: 1rem;" type="submit" class="button-24 " onclick="return confirm('แน่ใจหรือไม่ว่าจะลบ?')">ลบ</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Add Bootstrap JS (for responsive features and interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
